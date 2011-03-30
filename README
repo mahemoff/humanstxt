@@ -1,0 +1,5 @@
+Chrome extension showing a "page action" (button in omnibar) if human.txt is
+detected. Users can click on the icon to see the humans.txt file.
+
+Install this extension at the Chrome Web Store:
+https://chrome.google.com/webstore/detail/pocdghmbbodjiclginddlaimdaholhfk

@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+<style>
+  .main { margin: 1em; }
+  body { height: 2em; }
+</style>
+</head>
+<body>
+  <div class="main">
+    <pre id="humans"></pre>
+    <a target="_blank">humans.txt</a>
+  </div>
+  &nbsp;
+  <script src="jquery-1.4.4.min.js"></script>
+  <script>
+    $(function() {
+      $("#humans").text(chrome.extension.getBackgroundPage().humansTxt);
+      $("a").attr("href", chrome.extension.getBackgroundPage().humansLink);
+    });
+  </script>
+</body>
+</html>

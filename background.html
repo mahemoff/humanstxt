@@ -1,0 +1,23 @@
+<script src="jquery-1.4.4.min.js"></script>
+<script src="parseUri.js"></script>
+<script>
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  var u = parseUri(tab.url)
+  humansLink = u.protocol + "://" + u.host + "/humans.txt";
+  var ajax = $.ajax({
+    type: "GET",
+    url: humansLink,
+    success: function(_humansTxt, status) {
+      chrome.pageAction.show(tab.id);
+      humansTxt = _humansTxt;
+      chrome.pageAction.setIcon({
+        tabId: tab.id,
+        path: "h.jpg"
+      });
+    },
+    error: function() {
+      chrome.pageAction.hide(tab.id);
+    }
+  });
+});
+</script>

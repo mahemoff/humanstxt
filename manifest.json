@@ -1,0 +1,16 @@
+{
+  "name": "Humans.txt",
+  "description": "Show humans.txt for the current website, if it exists (see http://humanstxt.org)",
+  "icons": { "16": "h.jpg",
+             "128": "h.jpg" },
+  "version": "1.0",
+  "permissions": [
+    "tabs", "http://*/*", "https://*/*"
+  ],
+  "background_page": "background.html",
+  "page_action": {
+      "default_title": "See humans.txt",
+      "default_icon": "h.jpg",
+      "popup": "popup.html"
+  }
+}
