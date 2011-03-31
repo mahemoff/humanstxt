@@ -1,13 +1,35 @@
 <script src="jquery-1.4.4.min.js"></script>
 <script src="parseUri.js"></script>
 <script>
+
+function isValid(_humansTxt, status, xhr){
+  
+  _humansTxt = $.trim(_humansTxt).toLowerCase();
+  
+  
+  // any non 200 status's that jquery lets through
+  if (xhr.status != 200) return false;
+  
+  // weird content retrieved
+  if (/^unknown.$/.test(_humansTxt)) return false;
+  
+  // otherwise, thumbs up.
+  return true; 
+}
+
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  var u = parseUri(tab.url)
-  humansLink = u.protocol + "://" + u.host + "/humans.txt";
+  var u = parseUri(tab.url),
+      humansLink = u.protocol + "://" + u.host + "/humans.txt";
+      
   var ajax = $.ajax({
     type: "GET",
     url: humansLink,
-    success: function(_humansTxt, status) {
+    success: function(_humansTxt, status, xhr) {
+       
+      if (!isValid(_humansTxt, status, xhr)) { 
+        return chrome.pageAction.hide(tab.id);
+      }
+      
       chrome.pageAction.show(tab.id);
       humansTxt = _humansTxt;
       chrome.pageAction.setIcon({
