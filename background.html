@@ -1,45 +1,40 @@
-<script src="jquery-1.4.4.min.js"></script>
+<script src="jquery.min.js"></script>
 <script src="parseUri.js"></script>
+<script src="humans.js"></script>
 <script>
 
-function isValid(_humansTxt, status, xhr){
-  
-  _humansTxt = $.trim(_humansTxt).toLowerCase();
-  
-  
-  // any non 200 status's that jquery lets through
-  if (xhr.status != 200) return false;
-  
-  // weird content retrieved
-  if (/^unknown.$/.test(_humansTxt)) return false;
-  
-  // otherwise, thumbs up.
-  return true; 
+var selectedTabId, humansByTab = {}
+chrome.tabs.onSelectionChanged.addListener(function(tabId) {
+  selectedTabId = tabId;
+});
+function getSelectedHumans() {
+  return humansByTab[selectedTabId];
 }
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  var u = parseUri(tab.url),
-      humansLink = u.protocol + "://" + u.host + "/humans.txt";
-      
-  var ajax = $.ajax({
-    type: "GET",
-    url: humansLink,
-    success: function(_humansTxt, status, xhr) {
-       
-      if (!isValid(_humansTxt, status, xhr)) { 
-        return chrome.pageAction.hide(tab.id);
-      }
-      
-      chrome.pageAction.show(tab.id);
-      humansTxt = _humansTxt;
-      chrome.pageAction.setIcon({
-        tabId: tab.id,
-        path: "h.jpg"
-      });
-    },
-    error: function() {
-      chrome.pageAction.hide(tab.id);
+  var u = parseUri(tab.url), site = u.protocol + "://" + u.host;
+  if (u.port && u.port.strlen) site += ":" + u.port
+  if (humansByTab[tab.id] && humansByTab[tab.id].site == site) return; // already cached
+  loadHumans(site, function(text, link) {
+    chrome.pageAction.show(tab.id);
+    humansByTab[tab.id] = {
+      site: site,
+      text: text,
+      link: link
     }
-  });
+    chrome.pageAction.setIcon({
+      tabId: tab.id,
+      path: "h.jpg"
+    });
+  }, function() {
+    delete humansByTab[tab.id];
+    chrome.pageAction.hide(tab.id);
+  }
+  );
 });
+
+chrome.tabs.onRemoved.addListener(function(tabId) {
+  delete humansByTab[tabId];
+});
+
 </script>

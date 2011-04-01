@@ -12,12 +12,14 @@
     <a target="_blank">humans.txt</a>
   </div>
   &nbsp;
-  <script src="jquery-1.4.4.min.js"></script>
+  <script src="jquery.min.js"></script>
   <script>
     $(function() {
-      $("#humans").text(chrome.extension.getBackgroundPage().humansTxt);
-      $("a").attr("href", chrome.extension.getBackgroundPage().humansLink);
+      var humans = chrome.extension.getBackgroundPage().getSelectedHumans();
+      $("#humans").text(humans.text);
+      $("a").attr("href", humans.link);
     });
+
   </script>
 </body>
 </html>
