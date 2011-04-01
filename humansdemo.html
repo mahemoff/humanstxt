@@ -1,0 +1,15 @@
+<script src="jquery.min.js"></script>
+<script src="parseUri.js"></script>
+<script src="humans.js"></script>
+<script>
+$(function() {
+  loadHumans("http://localhost/humans.txt", function(humans) {
+    $("p").html(humans);
+  }, function() {
+    $("p").html("bain't no humans here :(");
+  });
+});
+</script>
+
+<p>
+</p>
