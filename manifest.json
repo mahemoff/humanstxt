@@ -3,7 +3,7 @@
   "description": "Show humans.txt for the current website, if it exists (see http://humanstxt.org)",
   "icons": { "16": "h.jpg",
              "128": "h.jpg" },
-  "version": "1.2",
+  "version": "1.3",
   "permissions": [
     "tabs", "http://*/*", "https://*/*"
   ],

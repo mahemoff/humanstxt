@@ -3,35 +3,36 @@
 <script src="humans.js"></script>
 <script>
 
-var selectedTabId, humansByTab = {}
-chrome.tabs.onSelectionChanged.addListener(function(tabId) {
-  selectedTabId = tabId;
-});
-function getSelectedHumans() {
-  return humansByTab[selectedTabId];
-}
+humansByTab = {}
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   var u = parseUri(tab.url), site = u.protocol + "://" + u.host;
   if (u.port && u.port.strlen) site += ":" + u.port
-  if (humansByTab[tab.id] && humansByTab[tab.id].site == site) return; // already cached
+  if (humansByTab[tab.id] && humansByTab[tab.id].site == site) return showPageAction(tab); // already cached
   loadHumans(site, function(text, link) {
-    chrome.pageAction.show(tab.id);
+    showPageAction(tab);
     humansByTab[tab.id] = {
       site: site,
       text: text,
       link: link
     }
-    chrome.pageAction.setIcon({
-      tabId: tab.id,
-      path: "h.jpg"
-    });
   }, function() {
-    delete humansByTab[tab.id];
-    chrome.pageAction.hide(tab.id);
-  }
-  );
+    hidePageAction(tab);
+  });
 });
+
+function showPageAction(tab) {
+  chrome.pageAction.show(tab.id);
+  chrome.pageAction.setIcon({
+    tabId: tab.id,
+    path: "h.jpg"
+  });
+}
+
+function hidePageAction(tab) {
+  delete humansByTab[tab.id];
+  chrome.pageAction.hide(tab.id);
+}
 
 chrome.tabs.onRemoved.addListener(function(tabId) {
   delete humansByTab[tabId];
