@@ -6,7 +6,7 @@
 humansByTab = {}
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  var u = parseUri(tab.url), site = u.protocol + "://" + u.host;
+  var u = parseUri(tab.url), site = "http://" + u.host;
   if (u.port && u.port.strlen) site += ":" + u.port
   if (humansByTab[tab.id] && humansByTab[tab.id].site == site) return showPageAction(tab); // already cached
   loadHumans(site, function(text, link) {
