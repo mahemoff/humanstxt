@@ -1,7 +1,7 @@
 function loadHumans(url, success, error) {
 
   var u = parseUri(url),
-      humansLink = u.protocol + "://" + u.host + "/humans.txt";
+      humansLink = "http://" + u.host + "/humans.txt";
 
   var ajax = $.ajax({ type: "GET", url: humansLink })
     .success(function(text, status, xhr) { 
