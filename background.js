@@ -1,8 +1,3 @@
-<script src="jquery.min.js"></script>
-<script src="parseUri.js"></script>
-<script src="humans.js"></script>
-<script>
-
 humansByTab = {}
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
@@ -37,5 +32,3 @@ function hidePageAction(tab) {
 chrome.tabs.onRemoved.addListener(function(tabId) {
   delete humansByTab[tabId];
 });
-
-</script>

@@ -8,10 +8,11 @@
   "permissions": [
     "tabs", "http://*/*", "https://*/*"
   ],
-  "background_page": "background.html",
+  "background": { "scripts": [ "jquery.min.js", "parseUri.js", "humans.js", "background.js" ]},
   "page_action": {
       "default_title": "See humans.txt",
       "default_icon": "icon-16.png",
-      "popup": "popup.html"
-  }
+      "default_popup": "popup.html"
+  },
+  "manifest_version": 2
 }
