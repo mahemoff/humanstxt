@@ -1,5 +1,6 @@
 {
   "name": "humans.txt WebExtension",
+  "author":"Michael Mahemoff and Joachim Robert",
   "description": "Show humans.txt for the current website, if it exists (see http://humanstxt.org). Based on Humans.txt for Chrome",
   "icons": { "16": "icons/icon-48.png",
              "48": "icons/icon-48.png",
