@@ -12,7 +12,15 @@ function loadText(tab) {
         hashtag: "twitter"
       });
 
-    document.getElementById("humansText").innerHTML = finalText;
+
+    finalText = "<div>" + finalText + "</div>";
+
+    const parser = new DOMParser()
+    const parsed = parser.parseFromString(finalText, 'text/html')
+    const tag = parsed.getElementsByTagName('body')[0]
+
+    document.getElementById("humansText").innerHTML = '';
+    document.getElementById("humansText").appendChild(tag.firstChild);
     document.getElementById("humansLink").setAttribute("href", humans.link);
   } else {
     document.getElementById("humansText").textContent = "No humans were detected.";

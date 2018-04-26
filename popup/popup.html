@@ -22,7 +22,7 @@
       text-rendering: optimizeLegibility; /* Force ligatures for Webkit, Blink, Gecko */
     }
 
-    #humansText { white-space: pre-wrap; }
+    #humansText { margin-top: 1.4em; white-space: pre-wrap; }
     #humansLink { display: none; font-weight: bold; }
     #humansLink[href] { display: inline-block; }
     a { color: black; }
@@ -33,7 +33,7 @@
 <body>
   <div class="main">
     <a id="humansLink" target="_blank">View in new tab</a>
-    <p id="humansText">Loading Humans…</p>
+    <div id="humansText">Loading Humans…</div>
   </div>
   <script src="Autolinker.js"></script>
   <script src="popup.js"></script>
