@@ -3,14 +3,15 @@ function loadHumans(url, success, error) {
   var u = parseUri(url),
       humansLink = u.protocol + "://" + u.host + "/humans.txt";
 
-  request(humansLink, function (err, response) {
-    if (err) {
-      error(url, humansLink);
-    } else {
-      success(response, humansLink);
-    }
-  });
-
+  if(u.protocol == "http" || u.protocol == "https") { // we want to avoid problems with chrome://
+    request(humansLink, function (err, response) {
+      if (err) {
+        error(url, humansLink);
+      } else {
+        success(response, humansLink);
+      }
+    });
+  }
 }
 
 function mapifyHeaders(responseHeaders) {
