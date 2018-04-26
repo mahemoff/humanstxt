@@ -1,10 +1,10 @@
 {
   "name": "humans.txt WebExtension",
   "description": "Show humans.txt for the current website, if it exists (see http://humanstxt.org). Based on Humans.txt for Chrome",
-  "icons": { "16": "icons/icon.svg",
-             "48": "icons/icon.svg",
-             "128": "icons/icon.svg" },
-  "version": "1",
+  "icons": { "16": "icons/icon-48.png",
+             "48": "icons/icon-48.png",
+             "128": "icons/icon-128.png" },
+  "version": "1.0",
   "permissions": [
     "tabs", "http://*/*", "https://*/*"
   ],
@@ -15,7 +15,10 @@
   ]},
   "page_action": {
       "default_title": "See humans.txt",
-      "default_icon": "icons/icon.svg",
+      "default_icon": {
+          "16": "icons/icon-48.png",
+          "48" : "icons/icon-48.png",
+          "128": "icons/icon-128.png" },
       "default_popup": "popup/popup.html"
   },
   "manifest_version": 2

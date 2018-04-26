@@ -23,12 +23,16 @@ function showPageAction(tab) {
   chrome.pageAction.show(tab.id);
   chrome.pageAction.setIcon({
     tabId: tab.id,
-    path: "../icons/icon.svg"
+    path: "../icons/icon-48.png"
   });
 }
 
 function hidePageAction(tab) {
   delete humansByTab[tab.id];
+  chrome.pageAction.setIcon({
+    tabId: tab.id,
+    path: "../icons/icon-48.png"
+  });
   chrome.pageAction.hide(tab.id);
 }
 
