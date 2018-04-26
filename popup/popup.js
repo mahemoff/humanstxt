@@ -4,7 +4,7 @@ function onError(error) {
 
 function loadText(tab) {
   var humans = chrome.extension.getBackgroundPage().humansByTab[tab.id];
-  if (humans || chrome.extension.getBackgroundPage().humansByTab) { // Weird Firefox bug, not present in FF Nightly
+  if (humans) {
     var finalText = Autolinker.link(
       humans.text,
       {
@@ -20,8 +20,8 @@ function loadText(tab) {
 };
 
 
-chrome.tabs.query({active: true}, function(result) {
-    result.forEach(function(tab){loadText(tab)});
+chrome.tabs.query({active: true, currentWindow: true}, function(result) {
+  result.forEach(function(tab){loadText(tab)});
 });
 
 
