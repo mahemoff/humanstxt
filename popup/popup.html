@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <meta name=viewport content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../fonts/fira_code.css">
+
+  <style>
+    html,body { 
+      margin: 0; 
+      padding: 0; 
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    body {
+      min-height: 2em;
+      width: 80ch;
+      padding: 1em;
+      font-family: "Fira Code", "Lucida Console", Monaco, monospace;
+
+      font-feature-settings: "calt" 1;  /* Enable ligatures for IE 10+, Edge */
+      text-rendering: optimizeLegibility; /* Force ligatures for Webkit, Blink, Gecko */
+    }
+
+    #humansText { white-space: pre-wrap; }
+    #humansLink { display: none; font-weight: bold; }
+    #humansLink[href] { display: inline-block; }
+    a { color: black; }
+    a:visited { color: #333; }
+    a:hover { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="main">
+    <a id="humansLink" target="_blank">View in new tab</a>
+    <p id="humansText">Loading Humans…</p>
+  </div>
+  <script src="Autolinker.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,26 +1,29 @@
 humansByTab = {}
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  var u = parseUri(tab.url), site = "http://" + u.host;
+  var u = parseUri(tab.url),
+      site = u.protocol + "://" + u.host;
   if (u.port && u.port.strlen) site += ":" + u.port
   if (humansByTab[tab.id] && humansByTab[tab.id].site == site) return showPageAction(tab); // already cached
-  loadHumans(site, function(text, link) {
-    showPageAction(tab);
-    humansByTab[tab.id] = {
-      site: site,
-      text: text,
-      link: link
+  loadHumans(site,
+    function(text, link) {
+      showPageAction(tab);
+      humansByTab[tab.id] = {
+        site: site,
+        text: text,
+        link: link
+      }
+    }, function() {
+      hidePageAction(tab);
     }
-  }, function() {
-    hidePageAction(tab);
-  });
+  );
 });
 
 function showPageAction(tab) {
   chrome.pageAction.show(tab.id);
   chrome.pageAction.setIcon({
     tabId: tab.id,
-    path: "h.jpg"
+    path: "../icons/icon.svg"
   });
 }
 
