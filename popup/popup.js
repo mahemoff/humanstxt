@@ -15,6 +15,7 @@ function loadText(tab) {
 
     finalText = "<div>" + finalText + "</div>";
 
+    // https://devtidbits.com/2017/12/06/quick-fix-the-unsafe_var_assignment-warning-in-javascript/
     const parser = new DOMParser()
     const parsed = parser.parseFromString(finalText, 'text/html')
     const tag = parsed.getElementsByTagName('body')[0]
