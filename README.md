@@ -24,9 +24,9 @@ First off, download the repository or clone it on your computer.
 
 ### Mozilla Firefox
 
-* Tools > Addons… (or `about:addons`)
-* Click on the cog button (Addon tools) and select *Debug Addons* (or type `about:debugging#addons` in address bar)
-* Click *Load Temporary Addon*
+* Tools > Add-ons… (or `about:addons`)
+* Click on the cog button (Add-on tools) and select *Debug Add-ons* (or type `about:debugging#addons` in address bar)
+* Click *Load Temporary Add-on*
 * Select the file named *manifest.json* in the project‘s folder
 
 
