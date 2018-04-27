@@ -38,6 +38,13 @@
     #humansText.ascii_mode { white-space: pre; }
     #humansLink { display: none; font-weight: bold; }
     #humansLink[href] { display: inline-block; }
+
+    /* TARGET CHROME */
+    @media screen and (-webkit-min-device-pixel-ratio:0)
+      and (min-resolution:.001dpcm) {
+      #humansText.ascii_mode { overflow: auto; padding-bottom: 1em; }
+    }
+
     a { color: black; }
     a:visited { color: #333; }
     a:hover { font-weight: bold; }
