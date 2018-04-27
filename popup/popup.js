@@ -16,15 +16,15 @@ function loadText(tab) {
     finalText = "<div>" + finalText + "</div>";
 
     // https://devtidbits.com/2017/12/06/quick-fix-the-unsafe_var_assignment-warning-in-javascript/
-    const parser = new DOMParser()
-    const parsed = parser.parseFromString(finalText, 'text/html')
-    const tag = parsed.getElementsByTagName('body')[0]
+    const parser = new DOMParser();
+    const parsed = parser.parseFromString(finalText, 'text/html');
+    const tag = parsed.querySelector('body');
 
-    document.getElementById("humansText").innerHTML = '';
-    document.getElementById("humansText").appendChild(tag.firstChild);
-    document.getElementById("humansLink").setAttribute("href", humans.link);
+    document.querySelector("#humansText").innerHTML = '';
+    document.querySelector("#humansText").appendChild(tag.firstChild);
+    document.querySelector("#humansLink").setAttribute("href", humans.link);
   } else {
-    document.getElementById("humansText").textContent = "No humans were detected.";
+    document.querySelector("#humansText").textContent = "No humans were detected.";
   }
 };
 
