@@ -33,6 +33,26 @@ chrome.tabs.query({active: true, currentWindow: true}, function(result) {
 });
 
 // ASCII ART MODE
-document.getElementById("asciiModeToggle").addEventListener('click', function(){
-  document.getElementById("humansText").classList.toggle("ascii_mode");
-});
+
+function onGot(item) {
+  // If the ASCII Art option is enabled, turn the mode on in the page
+  if (item.ascii_mode) {
+    document.querySelector("#humansText").classList.toggle("ascii_mode");
+    document.querySelector("#asciiModeToggle").checked = true;
+  }
+}
+
+function contentLoaded() {
+  if(typeof browser == "undefined"){
+    var getting = chrome.storage.local.get("ascii_mode", onGot);
+  } else {
+    var getting = browser.storage.local.get("ascii_mode");
+    getting.then(onGot, onError);
+  }
+
+  document.querySelector("#asciiModeToggle").addEventListener("change", function(){
+    document.querySelector("#humansText").classList.toggle("ascii_mode");
+  });
+}
+
+document.addEventListener("DOMContentLoaded", contentLoaded);

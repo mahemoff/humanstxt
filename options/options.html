@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <meta name=viewport content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../fonts/fira_code.css">
+  <style type="text/css" media="screen">
+    html,body { 
+      margin: 0; 
+      padding: 0; 
+      font-size: 13px;
+      line-height: 1.2;
+    }
+    body {
+      min-height: 2em;
+      width: 80ch;
+      padding: 1em;
+      font-family: "Fira Code", "Lucida Console", Monaco, monospace;
+      font-feature-settings: "calt" 1;  /* Enable ligatures for IE 10+, Edge */
+      text-rendering: optimizeLegibility; /* Force ligatures for Webkit, Blink, Gecko */
+    }
+    button {
+      font-family: "Fira Code", "Lucida Console", Monaco, monospace;
+      font-size: 1em;
+      padding: .4em 1em;
+      background:  none;
+      border: 1px solid rgba(0,0,0,.75);
+    }
+    button:hover {
+      background:  rgba(0,0,0,.125);
+      border: 1px solid rgb(0,0,0);
+    }
+    button:active {
+      background:  rgba(0,0,0,.25);
+      border: 1px solid rgb(0,0,0);
+    }
+    label { text-decoration: underline; cursor: pointer; }
+    input[type="checkbox"] { margin-right: .5em; }
+
+
+    a { color: black; }
+    a:visited { color: #333; }
+    a:hover { font-weight: bold; }
+  </style>
+</head>
+<body>
+    <form>
+      <p>
+        <label>
+          <input type="checkbox" name="ascii_mode" id="asciiModeToggle">Enable ASCII-Art mode by default
+          
+        </label>
+      </p>
+    </form>
+    <p><small>Preferences are saved automagically</small></p>
+  <script src="options.js"></script>
+</body>
+</html>
