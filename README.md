@@ -2,6 +2,11 @@
 
 This is a port of [Michael Mahemoff’s Chrome extension Humans.txt](https://github.com/mahemoff/humanstxt) ([Chrome Web Store link : Humans.txt](https://chrome.google.com/webstore/detail/pocdghmbbodjiclginddlaimdaholhfk)) to the new Firefox-compatible WebExtension format, with a couple of improvements.
 
+## Installation :
+
+* **Firefox Add-ons** : <https://addons.mozilla.org/en-US/firefox/addon/humans-txt-webextension/>
+* **Google Chrome Webstore** : <https://chrome.google.com/webstore/detail/humanstxt-webextension/monhadhlgfjjiokfekkllknnhemfbcon>
+
 
 ## What it does :
 
