@@ -6,12 +6,12 @@ function loadText(tab) {
   var humans = chrome.extension.getBackgroundPage().humansByTab[tab.id];
   if (humans) {
     var finalText = Autolinker.link(
-      humans.text,
-      {
-        mention: "twitter",
-        hashtag: "twitter"
-      });
-
+                      humans.text,
+                      {
+                        mention: "twitter",
+                        hashtag: "twitter"
+                      }
+                    );
 
     finalText = "<div>" + finalText + "</div>";
 
