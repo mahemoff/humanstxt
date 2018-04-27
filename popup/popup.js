@@ -28,9 +28,11 @@ function loadText(tab) {
   }
 };
 
-
 chrome.tabs.query({active: true, currentWindow: true}, function(result) {
   result.forEach(function(tab){loadText(tab)});
 });
 
-
+// ASCII ART MODE
+document.getElementById("asciiModeToggle").addEventListener('click', function(){
+  document.getElementById("humansText").classList.toggle("ascii_mode");
+});

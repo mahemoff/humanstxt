@@ -20,7 +20,17 @@
       text-rendering: optimizeLegibility; /* Force ligatures for Webkit, Blink, Gecko */
     }
 
-    #humansText { margin-top: 1.4em; white-space: pre-wrap; }
+    .menu {
+      position: fixed;
+      display: flex;
+      justify-content: space-between;
+      width: 80ch;
+    }
+    label { text-decoration: underline; cursor: pointer; }
+    input[type="checkbox"] { margin-right: .5em; }
+
+    #humansText { margin-top: 2.4em; white-space: pre-wrap; }
+    #humansText.ascii_mode { white-space: pre; }
     #humansLink { display: none; font-weight: bold; }
     #humansLink[href] { display: inline-block; }
     a { color: black; }
@@ -29,8 +39,13 @@
   </style>
 </head>
 <body>
-  <div class="main">
+  <div class="menu">
     <a id="humansLink" target="_blank">View in new tab</a>
+    <label>
+      <input type="checkbox" name="ascii_mode" id="asciiModeToggle">ASCII-Art mode
+    </label>
+  </div>
+  <div class="main">
     <div id="humansText">Loading Humans…</div>
   </div>
   <script src="Autolinker.js"></script>
