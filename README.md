@@ -48,6 +48,6 @@ This code is released under a MIT License.
 
 Autolinker.js was released under a MIT License.
 
-Fira Code was released under a SIL Open Font License.
+Sourse Code Pro was released under a SIL Open Font License.
 
 The Humans.txt Icon is released under a Creative Commons BY-NC-SA License.
