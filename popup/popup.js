@@ -5,12 +5,14 @@ function onError(error) {
 function loadText(tab) {
   var humans = chrome.extension.getBackgroundPage().humansByTab[tab.id];
   if (humans) {
-    var finalText = Autolinker.link(
-                      humans.text,
-                      {
-                        mention: "twitter",
-                        hashtag: "twitter"
-                      }
+    var finalText = markdown_parser(
+                      Autolinker.link(
+                        humans.text,
+                        {
+                          mention: "twitter",
+                          hashtag: "twitter"
+                        }
+                      )
                     );
 
     finalText = "<div>" + finalText + "</div>";

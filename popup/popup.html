@@ -18,6 +18,7 @@
       font-family: "Source Code Pro", "Lucida Console", Monaco, monospace;
       font-feature-settings: "calt" 1;  /* Enable ligatures for IE 10+, Edge */
       text-rendering: optimizeLegibility; /* Force ligatures for Webkit, Blink, Gecko */
+      color: rgba(0,0,0,.8);
     }
 
     .menu {
@@ -39,6 +40,22 @@
     #humansLink { display: none; font-weight: bold; }
     #humansLink[href] { display: inline-block; }
 
+
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: bold;
+      font-size: 1em;
+      margin: 0;
+      padding: 0;
+      border-bottom: 1px solid rgba(0,0,0,.333);
+      display: inline-block;
+      color: black;
+    }
+    h1.no-underline {
+      border: none;
+    }
+
+    code { font-family: Georgia, "Times New Roman", sans-serif; }
+
     /* TARGET CHROME */
     @media screen and (-webkit-min-device-pixel-ratio:0)
       and (min-resolution:.001dpcm) {
@@ -46,7 +63,7 @@
     }
 
     a { color: black; }
-    a:visited { color: #333; }
+    a:visited { color: rgba(0,0,0,.66); }
     a:hover { font-weight: bold; }
   </style>
 </head>
@@ -61,6 +78,7 @@
     <div id="humansText">Loading Humans&hellip;</div>
   </div>
   <script src="Autolinker.js"></script>
+  <script src="Markdown.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>
