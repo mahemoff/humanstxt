@@ -5,6 +5,9 @@ function onError(error) {
 function loadText(tab) {
   var humans = chrome.extension.getBackgroundPage().humansByTab[tab.id];
   if (humans) {
+    console.log(humans);
+    if (humans.finalText) return fillDocument(humans.finalText); // already cached
+
     var finalText = markdown_parser(
                       Autolinker.link(
                         humans.text,
@@ -16,19 +19,24 @@ function loadText(tab) {
                     );
 
     finalText = "<div>" + finalText + "</div>";
+    humans.finalText = finalText;
+    fillDocument(finalText);
 
-    // https://devtidbits.com/2017/12/06/quick-fix-the-unsafe_var_assignment-warning-in-javascript/
-    const parser = new DOMParser();
-    const parsed = parser.parseFromString(finalText, 'text/html');
-    const tag = parsed.querySelector('body');
-
-    document.querySelector("#humansText").innerHTML = '';
-    document.querySelector("#humansText").appendChild(tag.firstChild);
-    document.querySelector("#humansLink").setAttribute("href", humans.link);
   } else {
     document.querySelector("#humansText").textContent = "No humans were detected.";
   }
 };
+
+function fillDocument(finalText){
+  // https://devtidbits.com/2017/12/06/quick-fix-the-unsafe_var_assignment-warning-in-javascript/
+  const parser = new DOMParser();
+  const parsed = parser.parseFromString(finalText, 'text/html');
+  const tag = parsed.querySelector('body');
+
+  document.querySelector("#humansText").innerHTML = '';
+  document.querySelector("#humansText").appendChild(tag.firstChild);
+  document.querySelector("#humansLink").setAttribute("href", humans.link);
+}
 
 chrome.tabs.query({active: true, currentWindow: true}, function(result) {
   result.forEach(function(tab){loadText(tab)});
