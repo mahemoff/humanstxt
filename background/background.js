@@ -1,23 +1,53 @@
 humansByTab = {}
 
+var step = 0;
+var currentTab;
+var u;
+
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  var u = parseUri(tab.url),
+  step = 0;
+  currentTab = tab;
+
+  u = parseUri(tab.url),
       site = u.protocol + "://" + u.host;
-  if (u.port && u.port.strlen) site += ":" + u.port
+  if (u.port && u.port.strlen) site += ":" + u.port;
   if (humansByTab[tab.id] && humansByTab[tab.id].site == site) return showPageAction(tab); // already cached
-  loadHumans(site,
+  callHumans();
+});
+
+function callHumans() {
+  site = u.protocol + "://" + u.host;
+  if (u.port && u.port.strlen) site += ":" + u.port;
+  pathAsArray = u.path.split("/");
+
+  if(step == 0){
+    path = "/";
+  } else if(step == pathAsArray.length) {
+    hidePageAction(currentTab);
+    console.log("ok")
+  } else {
+    path = "";
+    for (var i = 0; i < pathAsArray.length; i++) {
+      path += pathAsArray[i] + "/";
+    }
+  }
+  path += "humans.txt";
+
+
+
+  loadHumans(site, path,
     function(text, link) {
-      showPageAction(tab);
-      humansByTab[tab.id] = {
+      showPageAction(currentTab);
+      humansByTab[currentTab.id] = {
         site: site,
         text: text,
         link: link
       }
     }, function() {
-      hidePageAction(tab);
+      hidePageAction(currentTab);
     }
   );
-});
+}
 
 function showPageAction(tab) {
   chrome.pageAction.show(tab.id);

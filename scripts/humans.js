@@ -1,12 +1,13 @@
-function loadHumans(url, success, error) {
+function loadHumans(site, path, success, error) {
+  humansLink = site + path;
 
-  var u = parseUri(url),
-      humansLink = u.protocol + "://" + u.host + "/humans.txt";
-
-  if(u.protocol == "http" || u.protocol == "https") { // we want to avoid problems with chrome://
-    request(humansLink, function (err, response) {
-      if (err) {
-        error(url, humansLink);
+  if(u.protocol.indexOf("http") !== -1) { // HTTP(S) links only
+    request(humansLink, function (response, err, status) {
+      if (status && status == 404) {
+        step += 1;
+        return callHumans();
+      } else if (err) {
+        error(site, humansLink);
       } else {
         success(response, humansLink);
       }
@@ -14,33 +15,28 @@ function loadHumans(url, success, error) {
   }
 }
 
-function mapifyHeaders(responseHeaders) {
-  var arr = responseHeaders.trim().split(/[\r\n]+/),
-      headerMap = {};
-  arr.forEach(function (line) {
-    var parts = line.split(': ');
-    var header = parts.shift();
-    var value = parts.join(': ');
-    headerMap[header] = value;
-  });
-  return headerMap;
-}
-
 function request(url, next) {
-  var request = new XMLHttpRequest();
-  request.open("GET", url, true);
-  request.send();
 
-  request.addEventListener("load", function () {
-    var headerMap = mapifyHeaders(request.getAllResponseHeaders());
-    var contentType = headerMap["Content-Type"] || headerMap["content-type"];
-    if (request.status < 200 && request.status >= 400) {
-      return next(new Error("We reached our target server, but it returned an error."));
+  var myHeaders = new Headers({
+    "Content-Type": "text/plain; charset=utf-8",
+    "Accept-Charset": "utf-8"
+  });
+  var myInit = { method: 'GET', headers: myHeaders };
+
+  fetch(url, myInit).then(function(response) {
+    var contentType = response.headers.get("content-type");
+    console.log(response);
+    if(contentType && contentType.indexOf("text/plain") !== -1) {
+      return response.text().then(function(content) {
+        return next(content)
+      });
+    } else {
+      return next(null, new Error("There was an error of some sort."), response.status);
     }
-    return (/text\/plain/.test(contentType)) ? next(null, request.responseText) : next(new Error("Wrong type of thing"));
+  }).catch(function(error) {
+    console.log("Il y a eu un problème avec l’opération fetch: " + error.message);
+    return next(null, new Error("There was an error of some sort: " + error.message));
   });
-  request.addEventListener("error", function () {
-    return next(new Error("There was a connection error of some sort."));
-  });
+
 }
 
