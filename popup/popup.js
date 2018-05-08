@@ -31,6 +31,7 @@ function fillDocument(finalText, link){
   document.querySelector("#humansText").innerHTML = '';
   document.querySelector("#humansText").appendChild(tag.firstChild);
   document.querySelector("#humansLink").setAttribute("href", link);
+  document.querySelector("#humansLink").setAttribute("title", link);
 }
 
 chrome.tabs.query({active: true, currentWindow: true}, function(result) {
