@@ -1,6 +1,8 @@
 {
   "name": "__MSG_extensionName__",
-  "author":"Michael Mahemoff and Joachim Robert",
+  "short_name": "Humans.txt",
+  "author":"Joachim Robert",
+  "homepage_url":"https://github.com/joachimesque/humanstxt-webextension",
   "description": "__MSG_extensionDescription__",
   "icons": { "16": "icons/icon-48.png",
              "48": "icons/icon-48.png",
