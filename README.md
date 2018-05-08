@@ -18,10 +18,7 @@ The extension displays an icon in the address bar (Firefox, Opera) or the toolba
 
 Users can click on the icon to see the humans.txt file.
 
-Plain text links and Twitter handles are turned to links to facilitate navigation.
-
-* This extension makes good use of Autolinker.js : <https://github.com/gregjacobs/Autolinker.js>
-* It uses Fira Code for displaying the Humans.txt file : https://github.com/tonsky/FiraCode
+Plain text links and Twitter handles are turned to links to facilitate navigation. Basic Markdown is accepted, and [standard-compatible](http://humanstxt.org/Standard.html) titles are more or less supported.
 
 ## How to install the extension for testing purposes :
 
@@ -44,10 +41,14 @@ First off, download the repository or clone it on your computer.
 
 ## Licensing
 
-This code is released under a MIT License.
+This code is released under MIT License.
 
-Autolinker.js was released under a MIT License.
+[Autolinker.js](https://github.com/gregjacobs/Autolinker.js) was released under MIT License.
 
-Sourse Code Pro was released under a SIL Open Font License.
+[Markdown.js](https://gist.github.com/fuzzyfox/5843166) was released under Mozilla Public License 2.0
 
-The Humans.txt Icon is released under a Creative Commons BY-NC-SA License.
+[webextensions-lib-l10n](http://github.com/piroor/webextensions-lib-l10n) was released under MIT License.
+
+[Sourse Code Pro](https://github.com/adobe-fonts/source-code-pro) was released under SIL Open Font License.
+
+The Humans.txt Icon is released under Creative Commons BY-NC-SA License.

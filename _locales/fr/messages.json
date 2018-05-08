@@ -1,0 +1,38 @@
+{
+  "extensionName": {
+    "message": "humans.txt",
+    "description": "Nom de l'extension."
+  },
+
+  "extensionDescription": {
+    "message": "Une extension pour montrer le fichier humans.txt du site visité, s'il existe (see http://humanstxt.org). Une évolution de l'extension Humans.txt pour Chrome",
+    "description": "Description de l'extension."
+  },
+
+  "popupLink": {
+    "message": "Voir dans un nouvel onglet",
+    "description": "Texte du lien vers le fichier humans.txt."
+  },
+
+  "popupAsciiMode": {
+    "message": "Mode ASCII-Art",
+    "description": "Texte de l’option ASCII Mode."
+  },
+
+  "popupLoadingMessage": {
+    "message": "Chargement des humains…",
+    "description": "Message de chargement du contenu."
+  },
+
+
+  "prefsAsciiMode": {
+    "message": "Chargement en mode ASCII-Art par défaut",
+    "description": "Texte de la préférence ASCII Mode."
+  },
+
+  "prefsAutosaveNotice": {
+    "message": "Les préférences sont sauvegardées automagiquement",
+    "description": "Message de sauvegarde automatique des préférences."
+  }
+
+}
