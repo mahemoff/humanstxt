@@ -66,6 +66,34 @@ function hidePageAction(tab) {
   chrome.pageAction.hide(tab.id);
 }
 
-chrome.tabs.onRemoved.addListener(function(tabId) {
-  delete humansByTab[tabId];
-});
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    
+    if (request.action == "loadHumans"){
+
+      let tabURL = new URL(request.tab.url)
+      let tabDomain = tabURL.host
+    
+      let humanstxtURL = tabURL.protocol + "//" + tabDomain + "/humans.txt"
+
+      if (humansByDomain[tabDomain] && humansByDomain[tabDomain].text) {
+        sendResponse({content: humansByDomain[tabDomain].text, url: humanstxtURL});
+      }
+
+      loadHumans(humanstxtURL, request.tab,
+        function (content, tab) {
+
+          showPageAction(tab);
+          humansByDomain[new URL(tab.url).host] = {}
+          humansByDomain[new URL(tab.url).host].text = content
+
+          sendResponse({content: content, url: humanstxtURL});
+
+        }, function (tab) {
+          hidePageAction(tab);
+        }
+      );
+
+    }
+    return true
+  });
