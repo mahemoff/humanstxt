@@ -1,53 +1,83 @@
-humansByTab = {}
+var humansByDomain = {}
 
-var step = 0;
-var currentTab;
-var u;
-
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  step = 0;
-  currentTab = tab;
-
-  u = parseUri(tab.url),
-      site = u.protocol + "://" + u.host;
-  if (u.port && u.port.strlen) site += ":" + u.port;
-  if (humansByTab[tab.id] && humansByTab[tab.id].site == site) return showPageAction(tab); // already cached
-  callHumans();
+chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+  let tabURL = new URL(tab.url)
+  let tabDomain = tabURL.host
+  if (humansByDomain[tabDomain]) return showPageAction(tab); // already cached
+  callHumans(tab);
 });
 
-function callHumans() {
-  site = u.protocol + "://" + u.host;
-  if (u.port && u.port.strlen) site += ":" + u.port;
-  pathAsArray = u.path.split("/");
+function callHumans(tab) {
 
-  if(step == 0){
-    path = "/";
-  } else if(step == pathAsArray.length) {
-    hidePageAction(currentTab);
-    console.log("ok")
-  } else {
-    path = "";
-    for (var i = 0; i < pathAsArray.length; i++) {
-      path += pathAsArray[i] + "/";
-    }
-  }
-  path += "humans.txt";
+  let tabURL = new URL(tab.url)
+  let tabDomain = tabURL.host
 
+  let humanstxtURL = tabURL.protocol + "//" + tabDomain + "/humans.txt"
 
-
-  loadHumans(site, path,
-    function(text, link) {
-      showPageAction(currentTab);
-      humansByTab[currentTab.id] = {
-        site: site,
-        text: text,
-        link: link
-      }
-    }, function() {
-      hidePageAction(currentTab);
+  checkHumans(humanstxtURL, tab,
+    function (tab) {
+      showPageAction(tab);
+      humansByDomain[new URL(tab.url).host] = {}
+    }, function (tab) {
+      hidePageAction(tab);
     }
   );
 }
+
+function loadHumans(url, tab, success, error) {
+  let headers = new Headers({
+    "Content-Type": "text/plain; charset=utf-8",
+    "Accept-Charset": "utf-8"
+  });
+  let request = { method: 'GET', headers: headers, cache: "force-cache" };
+
+  fetch(url, request).then(function(response) {
+    let contentType = response.headers.get("content-type");
+    if(contentType && contentType.indexOf("text/plain") !== -1) {
+      return response.text().then(function(content) {
+        return success(content, tab);
+      });
+    } else {
+      if (response.status == 404 || response.status > 300) {
+        return error(tab);
+      } else {
+        return error(tab);
+      }
+    }
+  }).catch(function(e) {
+    console.error(e);
+    return error(tab);
+  });
+}
+
+function checkHumans(url, tab, success, error) {
+
+  let headers = new Headers({
+    "Content-Type": "text/plain; charset=utf-8",
+    "Accept-Charset": "utf-8",
+  });
+
+  let request = { method: 'HEAD', headers: headers, cache: "force-cache" };
+
+  fetch(url, request).then(function (response) {
+    let contentType = response.headers.get("content-type");
+    if (contentType && contentType.indexOf("text/plain") !== -1) {
+      return success(tab);
+    } else {
+      if (response.status == 404 || response.status > 300) {
+        console.error("Error with resource");
+        return error(tab);
+      } else {
+        console.error("Unknown error");
+        return error(tab);
+      }
+    }
+  }).catch(function (e) {
+    console.error("Connection error: " + e.message);
+    return error(tab);
+  });
+}
+
 
 function showPageAction(tab) {
   chrome.pageAction.show(tab.id);
@@ -58,7 +88,6 @@ function showPageAction(tab) {
 }
 
 function hidePageAction(tab) {
-  delete humansByTab[tab.id];
   chrome.pageAction.setIcon({
     tabId: tab.id,
     path: "../icons/icon-48.png"
