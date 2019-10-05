@@ -31,10 +31,10 @@ function loadHumans(url, tab, success, error) {
   });
   let request = { method: 'GET', headers: headers, cache: "force-cache" };
 
-  fetch(url, request).then(function(response) {
+  fetch(url, request).then(function (response) {
     let contentType = response.headers.get("content-type");
-    if(contentType && contentType.indexOf("text/plain") !== -1) {
-      return response.text().then(function(content) {
+    if (contentType && contentType.indexOf("text/plain") !== -1) {
+      return response.text().then(function (content) {
         return success(content, tab);
       });
     } else {
@@ -44,7 +44,7 @@ function loadHumans(url, tab, success, error) {
         return error(tab);
       }
     }
-  }).catch(function(e) {
+  }).catch(function (e) {
     console.error(e);
     return error(tab);
   });
@@ -96,17 +96,17 @@ function hidePageAction(tab) {
 }
 
 chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    
-    if (request.action == "loadHumans"){
+  function (request, sender, sendResponse) {
+
+    if (request.action == "loadHumans") {
 
       let tabURL = new URL(request.tab.url)
       let tabDomain = tabURL.host
-    
+
       let humanstxtURL = tabURL.protocol + "//" + tabDomain + "/humans.txt"
 
       if (humansByDomain[tabDomain] && humansByDomain[tabDomain].text) {
-        sendResponse({content: humansByDomain[tabDomain].text, url: humanstxtURL});
+        sendResponse({ content: humansByDomain[tabDomain].text, url: humanstxtURL });
       }
 
       loadHumans(humanstxtURL, request.tab,
@@ -116,7 +116,7 @@ chrome.runtime.onMessage.addListener(
           humansByDomain[new URL(tab.url).host] = {}
           humansByDomain[new URL(tab.url).host].text = content
 
-          sendResponse({content: content, url: humanstxtURL});
+          sendResponse({ content: content, url: humanstxtURL });
 
         }, function (tab) {
           hidePageAction(tab);
