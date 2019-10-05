@@ -33,7 +33,7 @@ function loadHumans(url, tab, success, error) {
 
   fetch(url, request).then(function (response) {
     let contentType = response.headers.get("content-type");
-    if (contentType && contentType.indexOf("text/plain") !== -1) {
+    if (contentType && contentType.indexOf("text/") !== -1) {
       return response.text().then(function (content) {
         return success(content, tab);
       });
@@ -61,7 +61,7 @@ function checkHumans(url, tab, success, error) {
 
   fetch(url, request).then(function (response) {
     let contentType = response.headers.get("content-type");
-    if (contentType && contentType.indexOf("text/plain") !== -1) {
+    if (contentType && (contentType.indexOf("text/") !== -1)) {
       return success(tab);
     } else {
       if (response.status == 404 || response.status > 300) {
