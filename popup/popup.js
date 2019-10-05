@@ -3,19 +3,19 @@ function onError(error) {
 }
 
 function loadText(tab) {
-  var humans = chrome.extension.getBackgroundPage().humansByTab[tab.id];
-  if (humans) {
-    if (humans.finalText) return fillDocument(humans.finalText, humans.link); // already cached
-    var finalText = markdown_parser(
-                      Autolinker.link(humans.text, {
-                          mention: "twitter",
-                          hashtag: "twitter"
-                        })
-                      );
 
-    finalText = "<div>" + finalText + "</div>";
-    humans.finalText = finalText;
-    fillDocument(finalText, humans.link);
+  chrome.runtime.sendMessage({ action: "loadHumans", tab: tab }, function (response) {
+
+    if (response && response.content) {
+      var finalText = markdown_parser(
+        Autolinker.link(response.content, {
+          mention: "twitter",
+          hashtag: "twitter"
+        })
+      );
+
+      finalText = "<div>" + finalText + "</div>";
+      fillDocument(finalText, response.url);
 
   } else {
     document.querySelector("#humansText").textContent = "No humans were detected.";
