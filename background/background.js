@@ -24,7 +24,7 @@ function callHumans(tab) {
   );
 }
 
-function loadHumans(url, tab, success, error) {
+function loadHumans(url, tab, successCB, errorCB) {
   let headers = new Headers({
     "Content-Type": "text/plain; charset=utf-8",
     "Accept-Charset": "utf-8"
@@ -32,25 +32,29 @@ function loadHumans(url, tab, success, error) {
   let request = { method: 'GET', headers: headers, cache: "force-cache" };
 
   fetch(url, request).then(function (response) {
-    let contentType = response.headers.get("content-type");
-    if (contentType && contentType.indexOf("text/") !== -1) {
-      return response.text().then(function (content) {
-        return success(content, tab);
-      });
-    } else {
-      if (response.status == 404 || response.status > 300) {
-        return error(tab);
+
+    if (response.ok) {
+      let contentType = response.headers.get("content-type");
+      if (contentType && (contentType.indexOf("text/") !== -1)) {
+        return response.text().then(function (content) {
+          return successCB(content, tab);
+        });
       } else {
-        return error(tab);
+        console.warn("Error loading " + url + ": invalid content type")
+        return errorCB(tab);
       }
+    } else {
+      console.warn("Error loading " + url + ": no resource")
+      return errorCB(tab);
     }
+
   }).catch(function (e) {
-    console.error(e);
-    return error(tab);
+    console.error("Error loading " + url + ": connection error: " + e.message)
+    return errorCB(tab);
   });
 }
 
-function checkHumans(url, tab, success, error) {
+function checkHumans(url, tab, successCB, errorCB) {
 
   let headers = new Headers({
     "Content-Type": "text/plain; charset=utf-8",
@@ -60,21 +64,23 @@ function checkHumans(url, tab, success, error) {
   let request = { method: 'HEAD', headers: headers, cache: "force-cache" };
 
   fetch(url, request).then(function (response) {
-    let contentType = response.headers.get("content-type");
-    if (contentType && (contentType.indexOf("text/") !== -1)) {
-      return success(tab);
-    } else {
-      if (response.status == 404 || response.status > 300) {
-        console.error("Error with resource");
-        return error(tab);
+
+    if (response.ok) {
+      let contentType = response.headers.get("content-type");
+      if (contentType && (contentType.indexOf("text/") !== -1)) {
+        return successCB(tab);
       } else {
-        console.error("Unknown error");
-        return error(tab);
+        console.warn("Error checking " + url + ": invalid content type")
+        return errorCB(tab);
       }
+    } else {
+      console.warn("Error checking " + url + ": no resource")
+      return errorCB(tab);
     }
+
   }).catch(function (e) {
-    console.error("Connection error: " + e.message);
-    return error(tab);
+    console.error("Error checking " + url + ": connection error: " + e.message)
+    return errorCB(tab);
   });
 }
 
@@ -125,4 +131,5 @@ chrome.runtime.onMessage.addListener(
 
     }
     return true
-  });
+  }
+);
