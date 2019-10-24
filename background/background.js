@@ -96,7 +96,7 @@ function showPageAction(tab) {
 function hidePageAction(tab) {
   chrome.pageAction.setIcon({
     tabId: tab.id,
-    path: "../icons/icon-48.png"
+    path: "../icons/icon-hidden-48.png"
   });
   chrome.pageAction.hide(tab.id);
 }
