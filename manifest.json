@@ -1,7 +1,7 @@
 {
   "name": "__MSG_extensionName__",
   "short_name": "Humans.txt",
-  "author": "Joachim Robert",
+  "author": "Joachim Robert, Matteo Corossigo",
   "homepage_url": "https://github.com/joachimesque/humanstxt-webextension",
   "description": "__MSG_extensionDescription__",
   "icons": {
