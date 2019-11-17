@@ -1,5 +1,18 @@
 var humansByDomain = {}
 
+var dev_mode = false;
+
+function onGot(r) {
+  dev_mode = r.dev_mode || false
+}
+
+if(typeof browser == 'undefined'){ // Chrome doesn’t like promises
+  var getting = chrome.storage.local.get('dev_mode', onGot);
+} else { // Firefox does, tho
+  var getting = browser.storage.local.get('dev_mode');
+  getting.then(onGot);
+}
+
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   let tabURL = new URL(tab.url)
   let tabDomain = tabURL.host
@@ -32,24 +45,24 @@ function loadHumans(url, tab, successCB, errorCB) {
   let request = { method: 'GET', headers: headers, cache: "force-cache" };
 
   fetch(url, request).then(function (response) {
-
     if (response.ok) {
       let contentType = response.headers.get("content-type");
       if (contentType && (contentType.indexOf("text/") !== -1)) {
+        dev_mode && console.log("Loaded " + url + " successfully")
         return response.text().then(function (content) {
           return successCB(content, tab);
         });
       } else {
-        console.warn("Error loading " + url + ": invalid content type")
+        dev_mode && console.warn("Error loading " + url + ": invalid content type")
         return errorCB(tab);
       }
     } else {
-      console.warn("Error loading " + url + ": no resource")
+      dev_mode && console.warn("Error loading " + url + ": no resource")
       return errorCB(tab);
     }
 
   }).catch(function (e) {
-    console.error("Error loading " + url + ": connection error: " + e.message)
+    dev_mode && console.error("Error loading " + url + ": connection error: " + e.message)
     return errorCB(tab);
   });
 }
@@ -68,18 +81,19 @@ function checkHumans(url, tab, successCB, errorCB) {
     if (response.ok) {
       let contentType = response.headers.get("content-type");
       if (contentType && (contentType.indexOf("text/") !== -1)) {
+        dev_mode && console.log("Checked " + url + " successfully")
         return successCB(tab);
       } else {
-        console.warn("Error checking " + url + ": invalid content type")
+        dev_mode && console.warn("Error checking " + url + ": invalid content type")
         return errorCB(tab);
       }
     } else {
-      console.warn("Error checking " + url + ": no resource")
+      dev_mode && console.warn("Error checking " + url + ": no resource")
       return errorCB(tab);
     }
 
   }).catch(function (e) {
-    console.error("Error checking " + url + ": connection error: " + e.message)
+    dev_mode && console.error("Error checking " + url + ": connection error: " + e.message)
     return errorCB(tab);
   });
 }

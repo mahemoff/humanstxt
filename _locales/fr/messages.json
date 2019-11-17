@@ -30,6 +30,11 @@
     "description": "Texte de la préférence ASCII Mode."
   },
 
+  "prefsDevMode": {
+    "message": "Mode développement (affiche les messages en console)",
+    "description": "Dev-mode preference."
+  },
+
   "prefsAutosaveNotice": {
     "message": "Les préférences sont sauvegardées automagiquement",
     "description": "Message de sauvegarde automatique des préférences."

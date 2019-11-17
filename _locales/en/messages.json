@@ -30,6 +30,11 @@
     "description": "Ascii-mode preference."
   },
 
+  "prefsDevMode": {
+    "message": "Enable Dev mode (logs to console)",
+    "description": "Dev-mode preference."
+  },
+
   "prefsAutosaveNotice": {
     "message": "Preferences are saved automagically",
     "description": "Preferences auto-save notice."
