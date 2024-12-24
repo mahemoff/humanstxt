@@ -1,5 +1,11 @@
-Chrome extension showing a "page action" (button in omnibar) if human.txt is
+Chrome extension showing a "page action" (button in omnibar) if humans.txt is
 detected. Users can click on the icon to see the humans.txt file.
 
 Install this extension at the Chrome Web Store:
 https://chrome.google.com/webstore/detail/pocdghmbbodjiclginddlaimdaholhfk
+
+# What's humans.txt?
+
+A simple standard to show who's contributed to a website. Participating websites simply put a plain-text file at `/humans.txt`.
+
+For example, [here's Google's humans.txt](https://google.com/humans.txt).
